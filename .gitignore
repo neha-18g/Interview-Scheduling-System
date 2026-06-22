@@ -16,8 +16,6 @@ node_modules/
 frontend/.next/
 frontend/build/
 
-# Docker
-docker-compose.override.yml   # local overrides, often has secrets
 
 # Logs & maps
 *.log
@@ -29,4 +27,3 @@ docker-compose.override.yml   # local overrides, often has secrets
 
 # IDE
 .vscode/
-.idea/
