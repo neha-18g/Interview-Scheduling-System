@@ -1,0 +1,32 @@
+# Secrets
+.env
+*.env
+serviceAccountKey.json
+firebase-adminsdk*.json   # catches any Firebase service account key
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Node
+node_modules/
+frontend/.next/
+frontend/build/
+
+# Docker
+docker-compose.override.yml   # local overrides, often has secrets
+
+# Logs & maps
+*.log
+*.map
+
+# OS
+.DS_Store
+**/.DS_Store
+
+# IDE
+.vscode/
+.idea/

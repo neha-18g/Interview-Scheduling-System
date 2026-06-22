@@ -1,0 +1,20 @@
+# Virtual environment
+venv/
+env/
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# secrets
+serviceAccountKey.json
+*.env
+
+# IDE
+.vscode/
+.idea/
+
+uploads/
+resumes

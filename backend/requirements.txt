@@ -1,0 +1,11 @@
+fastapi==0.137.2
+firebase_admin==7.4.0
+httpx==0.28.1
+pdf2image==1.17.0
+pdfplumber==0.11.10
+pydantic==2.13.4
+pytesseract==0.3.13
+python-dotenv==1.2.2
+redis==8.0.0
+rq==2.9.1
+SQLAlchemy==2.0.51
