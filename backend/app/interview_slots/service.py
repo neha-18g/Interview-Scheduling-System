@@ -103,7 +103,6 @@ def get_slot_by_id(db: Session, slot_id: int) -> dict:
 
 def update_slot(db: Session, slot_id: int, data: InterviewSlotUpdate) -> dict:
     slot = _get_or_404(db, slot_id)
-
     updates = data.model_dump(exclude_unset=True)
 
     # Re-validate times when either (or both) are being changed
@@ -132,12 +131,23 @@ def update_slot(db: Session, slot_id: int, data: InterviewSlotUpdate) -> dict:
                 ),
             )
 
+    times_changed = "start_time" in updates or "end_time" in updates
+
     for field, value in updates.items():
         setattr(slot, field, value)
 
     slot.updated_at = datetime.now(timezone.utc)
     db.commit()
     db.refresh(slot)
+    # regenerate sub-slots if times changed
+    if times_changed:
+        db.query(InterviewSubSlot).filter(
+            InterviewSubSlot.slot_id == slot_id,
+            InterviewSubSlot.is_booked == False,   # only delete unbooked ones
+        ).delete()
+        db.commit()
+        generate_sub_slots(db, slot)
+
     return _enrich(db, slot)
 
 
@@ -182,6 +192,13 @@ def _active_booking_count(db: Session, slot_id: int) -> int:
         )
         .scalar() #sqlalchemy method to get the count result directly as an integer
     ) or 0
+def _to_ist(dt: datetime) -> str:
+    """Convert a naive UTC datetime from DB to IST ISO string."""
+    if dt is None:
+        return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)   # treat naive as UTC
+    return dt.astimezone(IST).isoformat()
 
 
 def _enrich(db: Session, slot: InterviewSlot) -> dict:#convert the db into clean api response with the extra fields
@@ -199,12 +216,12 @@ def _enrich(db: Session, slot: InterviewSlot) -> dict:#convert the db into clean
         "id":             slot.id,
         "title":          slot.title,
         "description":    slot.description,
-        "start_time":     slot.start_time,
-        "end_time":       slot.end_time,
+        "start_time":     _to_ist(slot.start_time),
+        "end_time":       _to_ist(slot.end_time),
         "max_candidates": slot.max_candidates,
         "created_by":     slot.created_by,
-        "created_at":     slot.created_at,
-        "updated_at":     slot.updated_at,
+        "created_at":     _to_ist(slot.created_at),
+        "updated_at":     _to_ist(slot.updated_at),
         "booked_count":   booked_count,
         "active_booking_count": booked_count,
         "is_available":   booked_count < slot.max_candidates,

@@ -36,13 +36,14 @@ class InterviewSlotResponse(BaseModel):
     id: int
     title: str
     description: Optional[str]
-    start_time: datetime
-    end_time: datetime
+    start_time: str
+    end_time: str
     max_candidates: int
     created_by: int
-    created_at: datetime
-    updated_at: datetime
+    created_at: str
+    updated_at: str
     booked_count: int = 0       # active (pending + approved) booking count
+    active_booking_count: int = 0
     is_available: bool = True   # True when booked_count < max_candidates
     available_sub_slots:int = 0
     model_config = {"from_attributes": True}
