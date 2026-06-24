@@ -90,7 +90,7 @@ services:
       - mysql_data:/var/lib/mysql          # persists your data across restarts
       - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql:ro  # auto-runs your schema on first start
     ports:
-      - "3306:3306"                         # optional: lets you connect via MySQL Workbench
+      - "3307:3306"                         # optional: lets you connect via MySQL Workbench
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
       interval: 10s
