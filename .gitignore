@@ -2,7 +2,7 @@
 .env
 *.env
 serviceAccountKey.json
-firebase-adminsdk*.json   # catches any Firebase service account key
+.env.production
 
 # Python
 venv/

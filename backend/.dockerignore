@@ -1,0 +1,17 @@
+# Python cache
+__pycache__
+*.pyc
+
+# Virtual environments — never bake these into the image
+.venv
+venv
+env
+
+# Secrets — never bake these into the image
+.env
+.env.*
+serviceAccountKey.json
+
+# Uploaded files — these are runtime data, not code
+uploads/
+

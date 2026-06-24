@@ -1,0 +1,16 @@
+# Dependencies — npm ci will re-install these inside the container
+node_modules
+
+# Previous build output
+dist
+
+# Secrets
+.env
+.env.*
+.env.local
+.env.production
+
+# Dev tools
+.vscode
+.idea
+*.log

@@ -23,8 +23,12 @@ const client = axios.create({
 client.interceptors.request.use(async (config) => {
   const user = auth.currentUser;
   if (user) {
-    const token = await user.getIdToken();
-    config.headers.Authorization = `Bearer ${token}`;
+    try{
+      const token = await user.getIdToken();
+      config.headers.Authorization = `Bearer ${token}`;
+    } catch (err) {
+      console.warn("Failed to get Firebase token:", err);
+    }
   }
   return config;
 });

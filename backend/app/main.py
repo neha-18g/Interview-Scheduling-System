@@ -40,7 +40,7 @@ app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(","),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -54,5 +54,5 @@ app.include_router(resume_review_router)
 app.include_router(tts_router)
 
 @app.get("/health")
-def health():
+async def health_check():
     return {"status": "ok"}
