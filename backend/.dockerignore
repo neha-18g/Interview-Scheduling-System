@@ -10,7 +10,6 @@ env
 # Secrets — never bake these into the image
 .env
 .env.*
-serviceAccountKey.json
 
 # Uploaded files — these are runtime data, not code
 uploads/
