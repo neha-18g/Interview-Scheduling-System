@@ -10,4 +10,3 @@ venv
 dist
 build
 backend/
-serviceAccountKey.json
