@@ -1,13 +1,10 @@
 import os
-import subprocess
-import sys
 import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from app.bookings.resume_review import router as resume_review_router 
-
+from app.bookings.resume_review import router as resume_review_router
 from app.interview_slots.router import router as interview_slots_router
 from app.bookings.router import router as bookings_router
 from app.emails.router import router as email_logs_router
@@ -20,20 +17,25 @@ logging.getLogger("sqlalchemy.engine").setLevel(logging.WARNING)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    Base.metadata.create_all(bind=engine)#create databsae table 
+    # Create database tables
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
     print("Database tables ready")
-    from app.auth.firebase import init_firebase # connects firebase
+
+    # Init Firebase
+    from app.auth.firebase import init_firebase
     init_firebase()
-    worker = subprocess.Popen([sys.executable, "-m", "app.worker"])# start RQ woker here automatically 
-    print(f"Worker auto-started (PID: {worker.pid})")
+
+    # DO NOT start worker here — Docker Compose runs it as a separate container
+    # subprocess.Popen was removed to avoid running two workers simultaneously
+
     yield
-    worker.terminate()
-    print("Worker stopped")
+    # Shutdown cleanup (if needed)
 
 app = FastAPI(
-    title="Interview Scheduling API",#to show in swagger ui 
+    title="Interview Scheduling API",
     version="1.0.0",
-    lifespan=lifespan,#to start and stop the instances modern form of event ("startup")
+    lifespan=lifespan,
 )
 
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
