@@ -18,7 +18,7 @@ export function useTTS() {
     setTtsError(null);
 
     try {
-      const res = await client.post("/v1/tts", { text });
+      const res = await client.post("/api/v1/tts", { text });
       const audioBase64 = res.data.audio;
 
       // Decode base64 → Blob → Object URL → play

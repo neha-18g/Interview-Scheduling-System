@@ -7,7 +7,14 @@ from app.auth.dependencies import get_current_user, require_admin, require_candi
 from app.bookings.schemas import BookingStatusUpdate, BookingResponse, BookingCreate
 from app.bookings import service
 from app.interview_slots.service import get_slot_by_id 
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo 
 
+IST = ZoneInfo("Asia/Kolkata")
+def _to_ist(dt):
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(IST)
 
 router = APIRouter(prefix="/api/v1", tags=["Bookings"])
 
@@ -149,12 +156,12 @@ def get_available_sub_slots(
     return [
         {
             "id"        : s.id,
-            "start_time": s.start_time,
-            "end_time"  : s.end_time,
-            "day"       : s.start_time.strftime("%A, %d %B %Y"),
+            "start_time": _to_ist(s.start_time).isoformat(),
+            "end_time"  : _to_ist(s.end_time).isoformat(),
+            "day"       : _to_ist(s.start_time).strftime("%A, %d %B %Y"),
             "time"      : (
-                f"{s.start_time.strftime('%I:%M %p')} - "
-                f"{s.end_time.strftime('%I:%M %p')}"
+                f"{_to_ist(s.start_time).strftime('%I:%M %p')} - "
+                f"{_to_ist(s.end_time).strftime('%I:%M %p')}"
             ),
         }
         for s in sub_slots

@@ -79,22 +79,12 @@ export default function SlotDetail() {
         <div style={styles.infoCard}>
           <div style={styles.infoRow}>
             <span style={styles.infoLabel}>Start time</span>
-<span>{slot?.start_time
-  ? new Date(slot.start_time.endsWith("Z") ? slot.start_time : slot.start_time + "Z")
-      .toLocaleString("en-IN", { timeZone: "Asia/Kolkata",
-        day: "numeric", month: "short", year: "numeric",
-        hour: "2-digit", minute: "2-digit", hour12: true })
-  : "—"}
+<span>{fmtDate(slot?.start_time)} {fmtTime(slot?.start_time)}
 </span>
           </div>
           <div style={styles.infoRow}>
             <span style={styles.infoLabel}>End time</span>
-<span>{slot?.end_time
-  ? new Date(slot.end_time.endsWith("Z") ? slot.end_time : slot.end_time + "Z")
-      .toLocaleString("en-IN", { timeZone: "Asia/Kolkata",
-        day: "numeric", month: "short", year: "numeric",
-        hour: "2-digit", minute: "2-digit", hour12: true })
-  : "—"}
+<span>{fmtDate(slot?.end_time)} {fmtTime(slot?.end_time)}
 </span>
           </div>
           <div style={styles.infoRow}>
@@ -136,12 +126,10 @@ export default function SlotDetail() {
                   </div>
                   <div>
                     <p style={styles.candidateName}>
-                      {b.candidate?.name || `Candidate #${b.candidate_user_id}`}
+                      {b.candidate_name || `Candidate #${b.candidate_user_id}`}
                     </p>
-                    <p style={styles.candidateEmail}>{b.candidate?.email}</p>
-                    <p style={styles.bookedAt}>
-                      Booked: {new Date(b.booked_at).toLocaleString()}
-                    </p>
+                    <p style={styles.candidateEmail}>{b.candidate_email}</p>
+                    <p>{fmtDate(b.booked_at)} {fmtTime(b.booked_at)}</p>
                             {b.candidate_statement && (
   <div style={{
     marginTop: 8, padding: "8px 10px",
@@ -216,6 +204,26 @@ export default function SlotDetail() {
       </div>
     </div>
   );
+}
+function fmtTime(isoStr) {
+  if (!isoStr) return "—";
+  const timePart = isoStr.replace("T", " ").split(" ")[1];
+  if (!timePart) return "—";
+  const [hStr, mStr] = timePart.split(":");
+  const h = parseInt(hStr, 10);
+  const ampm = h >= 12 ? "PM" : "AM";
+  const h12 = h % 12 || 12;
+  return `${String(h12).padStart(2, "0")}:${mStr} ${ampm}`;
+}
+
+function fmtDate(isoStr) {
+  if (!isoStr) return "—";
+  const datePart = isoStr.replace("T", " ").split(" ")[0];
+  const [year, month, day] = datePart.split("-").map(Number);
+  const d = new Date(year, month - 1, day);
+  return d.toLocaleDateString("en-IN", {
+    weekday: "long", day: "numeric", month: "short", year: "numeric",
+  });
 }
 
 const styles = {

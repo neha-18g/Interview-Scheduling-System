@@ -7,7 +7,15 @@ from app.db.models import InterviewSlot, InterviewSubSlot, SlotBooking, BookingS
 from app.interview_slots.schemas import InterviewSlotCreate, InterviewSlotUpdate
 from zoneinfo import ZoneInfo
 
-IST=ZoneInfo("Asia/Kolkata")
+IST = ZoneInfo("Asia/Kolkata")
+
+def _to_utc(dt: datetime) -> datetime:
+    """Convert any datetime (aware or naive IST) to UTC."""
+    if dt.tzinfo is None:
+        # naive — assume IST
+        from zoneinfo import ZoneInfo
+        dt = dt.replace(tzinfo=ZoneInfo("Asia/Kolkata"))
+    return dt.astimezone(timezone.utc)
 
 WORK_DAYS = {0,1,2,3,4} #mon-Friday
 SLOT_DURATION = 30 #minutes
@@ -72,8 +80,8 @@ def create_slot(db: Session, data: InterviewSlotCreate, admin_user_id: int) -> d
     slot = InterviewSlot(
         title=data.title,
         description=data.description,
-        start_time=data.start_time,
-        end_time=data.end_time,
+        start_time=_to_utc(data.start_time),
+        end_time=_to_utc(data.end_time),
         max_candidates=data.max_candidates,
         created_by=admin_user_id,
     )
@@ -134,7 +142,10 @@ def update_slot(db: Session, slot_id: int, data: InterviewSlotUpdate) -> dict:
     times_changed = "start_time" in updates or "end_time" in updates
 
     for field, value in updates.items():
-        setattr(slot, field, value)
+        if field in ("start_time", "end_time") and value is not None:
+            setattr(slot, field, _to_utc(value))
+        else:
+            setattr(slot, field, value)
 
     slot.updated_at = datetime.now(timezone.utc)
     db.commit()

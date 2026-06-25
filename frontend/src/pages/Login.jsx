@@ -10,7 +10,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { firebaseUser, loading } = useAuth();
+  const { firebaseUser, loading, refereshDbUser } = useAuth();
 
   const [isSignup,   setIsSignup]   = useState(false);
   const [name,       setName]       = useState("");
@@ -32,56 +32,53 @@ export default function Login() {
     try {
       if (isSignup) {
         const cred = await createUserWithEmailAndPassword(auth, email, password);
-await updateProfile(cred.user, { displayName: name.trim() });
-await cred.user.reload();  // ← wait for Firebase to update
+        await updateProfile(cred.user, { displayName: name.trim() });// set the display name before getting the token 
 
-console.log("displayName after reload:", cred.user.displayName); // ← should show "username" not the first name of the entered gmail.
+        const idToken = await cred.user.getIdToken(true);  // ← force fresh token
+        const res = await fetch("/api/v1/users/register", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({ name: name.trim() }),
+    });
 
-const idToken = await cred.user.getIdToken(true);  // ← force fresh token
-await fetch("http://localhost:8000/api/v1/users/register", {
-  method: "POST",
-  headers: {
-    Authorization: `Bearer ${idToken}`,
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({ name: name.trim() }),
-});
+      const data = await res.json();
+      console.log("Backend register response:", data); // ← should show name: "sam"
 
-const data = await res.json();
-console.log("Backend register response:", data); // ← should show name: "sam"
+      if(!res.ok) throw new Error(data.detail || "Registration failed");      
 
-// ← wait for AuthContext to re-fetch dbUser with correct name
-await new Promise(resolve => setTimeout(resolve, 500));
+      await refereshDbUser();
+      navigate("/dashboard");
+        } else {
+          await signInWithEmailAndPassword(auth, email, password);
+          navigate("/dashboard");
+        }
+      } catch (err) {
+        // Log the real error code so we can debug
+        console.error("Firebase error code:", err.code);
+        console.error("Firebase error message:", err.message);
 
-navigate("/dashboard");
-      } else {
-        await signInWithEmailAndPassword(auth, email, password);
-        navigate("/dashboard");
+        // All lowercase — Firebase always returns lowercase error codes
+        const messages = {
+          "auth/user-not-found":        "No account found with this email.",
+          "auth/wrong-password":        "Incorrect password.",
+          "auth/email-already-in-use":  "An account with this email already exists.",
+          "auth/weak-password":         "Password must be at least 6 characters.",
+          "auth/invalid-email":         "Please enter a valid email address.",
+          "auth/too-many-requests":     "Too many attempts. Please try again later.",
+          "auth/user-disabled":         "This account has been disabled.",
+          "auth/invalid-credential":    "Incorrect email or password.",  // newer Firebase
+          "auth/network-request-failed":"Network error. Check your connection.",
+        };
+        setError(messages[err.code] || `Error: ${err.code} — ${err.message}`);
+      } finally {
+        setSubmitting(false);
       }
-    } catch (err) {
-      // Log the real error code so we can debug
-      console.error("Firebase error code:", err.code);
-      console.error("Firebase error message:", err.message);
+    };
 
-      // All lowercase — Firebase always returns lowercase error codes
-      const messages = {
-        "auth/user-not-found":        "No account found with this email.",
-        "auth/wrong-password":        "Incorrect password.",
-        "auth/email-already-in-use":  "An account with this email already exists.",
-        "auth/weak-password":         "Password must be at least 6 characters.",
-        "auth/invalid-email":         "Please enter a valid email address.",
-        "auth/too-many-requests":     "Too many attempts. Please try again later.",
-        "auth/user-disabled":         "This account has been disabled.",
-        "auth/invalid-credential":    "Incorrect email or password.",  // newer Firebase
-        "auth/network-request-failed":"Network error. Check your connection.",
-      };
-      setError(messages[err.code] || `Error: ${err.code} — ${err.message}`);
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  return (
+    return (
     <div style={styles.page}>
       <div style={styles.card}>
         <div style={styles.header}>

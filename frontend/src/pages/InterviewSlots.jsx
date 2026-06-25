@@ -97,8 +97,8 @@ function BookingModal({ slot, onClose, onSuccess }) {
             <p style={modalStyles.slotDesc}>{slot.description}</p>
           )}
           <div style={modalStyles.slotTimes}>
-            <span>🗓 {new Date(slot.start_time).toLocaleString()}</span>
-            <span>⏱ {new Date(slot.end_time).toLocaleString()}</span>
+           <span>🗓 {fmtDate(slot.start_time)} {fmtTime(slot.start_time)}</span>
+           <span>⏱ {fmtDate(slot.end_time)} {fmtTime(slot.end_time)}</span>
           </div>
         </div>
 
@@ -261,8 +261,8 @@ export default function InterviewSlots() {
       const payload = {};
       if (editForm.title.trim())          payload.title          = editForm.title.trim();
       if (editForm.description.trim())    payload.description    = editForm.description.trim();
-      if (editForm.start_time)            payload.start_time     = new Date(editForm.start_time).toISOString();
-      if (editForm.end_time)              payload.end_time       = new Date(editForm.end_time).toISOString();
+      if (editForm.start_time)            payload.start_time     = editForm.start_time + ":00+05:30";
+      if (editForm.end_time)              payload.end_time       = editForm.end_time + ":00+05:30";
       if (editForm.max_candidates !== "") payload.max_candidates = Number(editForm.max_candidates);
 
       const res = await client.put(`/api/v1/interview-slots/${slotId}`, payload);
@@ -405,8 +405,8 @@ export default function InterviewSlots() {
                         <p style={styles.cardDesc}>{slot.description}</p>
                       )}
                       <div style={styles.cardTime}>
-                        <span>🗓 {new Date(slot.start_time).toLocaleString()}</span>
-                        <span>⏱ {new Date(slot.end_time).toLocaleString()}</span>
+                        <span>🗓 {fmtDate(slot.start_time)} {fmtTime(slot.start_time)}</span>
+                        <span>⏱ {fmtDate(slot.end_time)} {fmtTime(slot.end_time)}</span>
                       </div>
 
                       {dbUser?.role === "candidate" && (
@@ -457,15 +457,29 @@ export default function InterviewSlots() {
 
 function toLocalDatetimeInput(isoString) {
   if (!isoString) return "";
-  const d = new Date(isoString);
-  const pad = n => String(n).padStart(2, "0");
-  return (
-    d.getFullYear() + "-" +
-    pad(d.getMonth() + 1) + "-" +
-    pad(d.getDate()) + "T" +
-    pad(d.getHours()) + ":" +
-    pad(d.getMinutes())
-  );
+  const local = isoString.split("+")[0];
+  return local.slice(0, 16);
+}
+
+function fmtTime(isoStr) {
+  if (!isoStr) return "—";
+  const timePart = isoStr.replace("T", " ").split(" ")[1];
+  if (!timePart) return "—";
+  const [hStr, mStr] = timePart.split(":");
+  const h = parseInt(hStr, 10);
+  const ampm = h >= 12 ? "PM" : "AM";
+  const h12 = h % 12 || 12;
+  return `${String(h12).padStart(2, "0")}:${mStr} ${ampm}`;
+}
+
+function fmtDate(isoStr) {
+  if (!isoStr) return "—";
+  const datePart = isoStr.replace("T", " ").split(" ")[0];
+  const [year, month, day] = datePart.split("-").map(Number);
+  const d = new Date(year, month - 1, day);
+  return d.toLocaleDateString("en-IN", {
+    weekday: "long", day: "numeric", month: "short", year: "numeric",
+  });
 }
 
 const styles = {

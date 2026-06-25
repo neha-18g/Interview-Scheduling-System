@@ -41,8 +41,8 @@ class BookingResponse(BaseModel):
 
     # Denormalised slot fields — populated by the service layer
     slot_title:      Optional[str]      = None
-    slot_start_time: Optional[datetime] = None
-    slot_end_time:   Optional[datetime] = None
+    slot_start_time: Optional[str] = None
+    slot_end_time:   Optional[str] = None
 
     # Denormalised candidate fields — populated in admin view only
     candidate_name:  Optional[str] = None

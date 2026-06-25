@@ -9,6 +9,8 @@ import { useAuth } from "../context/AuthContext";
 export default function Dashboard() {
   const { dbUser, logout } = useAuth();
   const navigate = useNavigate();
+  
+console.log("dbUser:", dbUser);
 
   const handleLogout = async () => {
     await logout();

@@ -22,8 +22,8 @@ export default function CreateSlot() {
       await client.post("/api/v1/interview-slots", {
         ...form,
         max_candidates: parseInt(form.max_candidates),
-        start_time: form.start_time ? form.start_time + ":00" : "",
-        end_time: form.end_time ? form.end_time + ":00" : "",
+        start_time: form.start_time ? form.start_time + ":00+05:30" : "",
+        end_time: form.end_time ? form.end_time + ":00+05:30" : "",
       });
       navigate("/interview-slots");
     } catch (err) {

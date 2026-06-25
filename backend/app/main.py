@@ -24,8 +24,6 @@ async def lifespan(app: FastAPI):
     print("Database tables ready")
     from app.auth.firebase import init_firebase # connects firebase
     init_firebase()
-    worker = subprocess.Popen([sys.executable, "-m", "app.worker"])# start RQ woker here automatically 
-    print(f"Worker auto-started (PID: {worker.pid})")
     yield
     worker.terminate()
     print("Worker stopped")

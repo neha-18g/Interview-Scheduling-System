@@ -6,6 +6,14 @@ from datetime import datetime, timezone, UTC
 from app.db.models import SlotBooking, InterviewSlot, InterviewSubSlot, User, BookingStatus
 from app.bookings.schemas import BookingStatusUpdate
 from app.queues.email_queue import push_email_job
+from zoneinfo import ZoneInfo
+IST = ZoneInfo("Asia/Kolkata")
+
+def _to_ist_str(dt):
+    if dt is None: return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(IST).isoformat()
 
 
 # ── Candidate: book a slot ────────────────────────────────────────────────────
@@ -181,6 +189,13 @@ def update_booking_status(
             detail="Cannot approve a previously rejected booking.",
         )
 
+    if new_status == BookingStatus.rejected and booking.sub_slot_id:
+        sub_slot = db.query(InterviewSubSlot).filter(
+            InterviewSubSlot.id == booking.sub_slot_id
+        ).first()
+        if sub_slot:
+            sub_slot.is_booked = False
+
     # Capacity race-condition check when approving
     if new_status == BookingStatus.approved:
         slot = _get_slot_or_404(db, booking.slot_id)
@@ -286,8 +301,8 @@ def _enrich(db: Session, booking: SlotBooking, include_candidate: bool) -> dict:
         "slot_id":             booking.slot_id,
         "candidate_user_id":   booking.candidate_user_id,
         "status":              booking.status.value,
-        "booked_at":           booking.booked_at,
-        "updated_at":          booking.updated_at,
+        "booked_at":           _to_ist_str(booking.booked_at),
+        "updated_at":          _to_ist_str(booking.updated_at),
         "candidate_statement": booking.candidate_statement,
         "resume_path":         booking.resume_path,
         "ai_result":           booking.ai_result,
@@ -295,8 +310,8 @@ def _enrich(db: Session, booking: SlotBooking, include_candidate: bool) -> dict:
         "ai_summary":          booking.ai_summary,
         "sub_slot_id":         booking.sub_slot_id,
         "slot_title":          slot.title          if slot     else None,
-        "slot_start_time":     sub_slot.start_time if sub_slot else None,
-        "slot_end_time":       sub_slot.end_time   if sub_slot else None,
+        "slot_start_time":     _to_ist_str(sub_slot.start_time) if sub_slot else None,
+        "slot_end_time":       _to_ist_str(sub_slot.end_time)   if sub_slot else None,
         "candidate_name":      None,
         "candidate_email":     None,
     }

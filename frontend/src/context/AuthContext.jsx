@@ -26,11 +26,24 @@ export function AuthProvider({ children }) {
   // dbUser — the row from your MySQL users table { id, name, email, role }
   const [dbUser, setDbUser] = useState(null);
 
-  // token — the Firebase JWT, refreshed automatically every hour by Firebase
-  const [token, setToken] = useState(null);
-
   // loading — true until Firebase tells us whether a session exists
   const [loading, setLoading] = useState(true);
+
+  const getToken = async () => {
+    if(!firebaseUser) return null ;
+    return await firebaseUser.getIdToken();
+  }
+
+  const refreshDbUser = async (user = firebaseUser) => {
+    if (!user) return;
+    try{
+      const idToken = await user.getIdToken(true); //force fresh token 
+      const profile = await getMyProfile(idToken);
+      setDbUser(profile);
+    } catch (err) {
+      console.error("Failed to refresh user profile:", err);
+    }
+  };
 
   useEffect(() => {
     // onAuthStateChanged fires:
@@ -38,25 +51,15 @@ export function AuthProvider({ children }) {
     //   2. Again whenever the user logs in or out
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // User is logged in — get a fresh JWT token
-        // getIdToken(true) forces a refresh; getIdToken() uses cached if valid
-        const idToken = await user.getIdToken(true);
-        setToken(idToken);
         setFirebaseUser(user);
 
-        // Fetch the user's role and name from your FastAPI backend
-        // This also auto-creates the MySQL row on first login
-        try {
-          const profile = await getMyProfile(idToken);
-          setDbUser(profile);
-        } catch (err) {
-          console.error("Failed to fetch user profile:", err);
-        }
+        // Pass user directly — firebaseUser state is not updated yet at this point
+        // React batches state updates so setFirebaseUser above hasn't settled
+        await refreshDbUser(user);
       } else {
         // User logged out — clear everything
         setFirebaseUser(null);
         setDbUser(null);
-        setToken(null);
       }
       setLoading(false);
     });
@@ -71,7 +74,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ firebaseUser, dbUser, token, loading, logout }}>
+    <AuthContext.Provider value={{ firebaseUser, dbUser, loading, logout, getToken, refreshDbUser }}>
       {children}
     </AuthContext.Provider>
   );

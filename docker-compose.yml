@@ -35,6 +35,7 @@ services:
       - "8000:8000"             # optional: lets you hit the API directly at localhost:8000
     volumes:
       - uploads_data:/app/uploads/resumes   # persists uploaded resumes
+      - ./backend/serviceAccountKey.json:/app/serviceAccountKey.json:ro
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
       interval: 30s
@@ -60,7 +61,15 @@ services:
         condition: service_healthy
       backend:
         condition: service_started
-    command: ["python",  "app/worker.py"]
+    command: ["python", "-m", "app.worker"]
+    volumes:
+      - ./backend/serviceAccountKey.json:/app/serviceAccountKey.json:ro
+    healthcheck:
+      test: ["CMD-SHELL", "python -c 'import redis, os; redis.from_url(\"redis://redis:6379/0\").ping()'"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
 
   # --------------------------------------------------------------------------
   # Frontend — nginx serving the Vite/React build
@@ -68,6 +77,14 @@ services:
   frontend:
     build:
       context: ./frontend       # Docker looks for frontend/Dockerfile
+      args:
+        VITE_API_URL: /api
+        VITE_FIREBASE_API_KEY: ${VITE_FIREBASE_API_KEY}
+        VITE_FIREBASE_AUTH_DOMAIN: ${VITE_FIREBASE_AUTH_DOMAIN}
+        VITE_FIREBASE_PROJECT_ID: ${VITE_FIREBASE_PROJECT_ID}
+        VITE_FIREBASE_STORAGE_BUCKET: ${VITE_FIREBASE_STORAGE_BUCKET}
+        VITE_FIREBASE_MESSAGING_SENDER_ID: ${VITE_FIREBASE_MESSAGING_SENDER_ID}
+        VITE_FIREBASE_APP_ID: ${VITE_FIREBASE_APP_ID}
     container_name: iss_frontend
     restart: unless-stopped
     depends_on:
@@ -82,17 +99,17 @@ services:
     container_name: iss_mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: iss_db
-      MYSQL_USER: iss_user
-      MYSQL_PASSWORD: iss_password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql          # persists your data across restarts
       - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql:ro  # auto-runs your schema on first start
     ports:
       - "3307:3306"                         # optional: lets you connect via MySQL Workbench
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 10s
       timeout: 5s
       retries: 5

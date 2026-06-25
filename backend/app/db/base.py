@@ -2,7 +2,7 @@
 from dotenv import load_dotenv
 load_dotenv()  # Load environment variables from .env file
 
-from sqlalchemy import create_engine #engine is the sqlalchemy connection to the database
+from sqlalchemy import create_engine, event #engine is the sqlalchemy connection to the database
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 import os
 
@@ -13,6 +13,12 @@ DATABASE_URL = os.getenv(
 
 # echo=True logs every SQL statement — set False in production
 engine = create_engine(DATABASE_URL, echo=False)
+
+@event.listens_for(engine, "connect")
+def set_utc_on_connect(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("SET time_zone = '+00:00'")
+    cursor.close()
 
 # Each request gets its own session; closed after the request ends
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
