@@ -44,7 +44,7 @@ def extract_text_from_pdf(file_path: str) -> str:
     Returns empty string if the PDF is scanned / image-only.
     """
     text_chunks = []
-    with pdfplumber.open(file_path) as pdf:
+    with pdfplumber.open(file_path) as pdf: #context manager pattern where something to set it up,use it and automatically clean it
         for page in pdf.pages:
             page_text = page.extract_text()
             if page_text:
@@ -62,7 +62,6 @@ def extract_text_with_ocr(file_path: str) -> str:
         if text.strip():
             text_chunks.append(text.strip())
     return "\n\n".join(text_chunks)
-
 
 
 async def call_sarvam_chat(resume_text: str, candidate_name: str) -> str:
