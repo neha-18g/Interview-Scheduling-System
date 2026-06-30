@@ -16,7 +16,7 @@ export default function SplashScreen() {
       style={{
         height: "100vh",
         display: "flex",
-        flexDirection: "column",        // ✅ stack children vertically
+        flexDirection: "column",        // stack children vertically
         justifyContent: "center",
         alignItems: "center",
         background: "linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #3b82f6 100%)",
@@ -34,7 +34,7 @@ export default function SplashScreen() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginBottom: "24px",         // ✅ removed "margin: 0 auto 24px" (auto handles centering via parent now)
+          marginBottom: "24px",         // removed "margin: 0 auto 24px" (auto handles centering via parent now)
           fontSize: "2rem",
           fontWeight: "bold",
         }}
@@ -48,7 +48,7 @@ export default function SplashScreen() {
           fontWeight: "800",
           marginBottom: "12px",
           letterSpacing: "1px",
-          textAlign: "center",          // ✅ center text on smaller screens
+          textAlign: "center",          //  center text on smaller screens
         }}
       >
         Interview Scheduling System
@@ -59,7 +59,7 @@ export default function SplashScreen() {
           fontSize: "1.1rem",
           opacity: 0.85,
           marginBottom: "40px",
-          textAlign: "center",          // ✅ center text on smaller screens
+          textAlign: "center",          //  center text on smaller screens
         }}
       >
         Streamlining interview scheduling and management

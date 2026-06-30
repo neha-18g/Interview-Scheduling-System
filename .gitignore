@@ -27,3 +27,4 @@ frontend/build/
 
 # IDE
 .vscode/
+frontend/dist/

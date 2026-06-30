@@ -96,7 +96,7 @@ onClick={async () => {
 }}
           style={styles.deleteBtn}
         >
-          🗑 Delete This Log
+           Delete This Log
         </button>
 
       </div>

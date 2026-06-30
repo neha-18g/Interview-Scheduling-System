@@ -65,7 +65,7 @@ function BookingModal({ slot, onClose, onSuccess }) {
         `Good luck!`;
 
       speak(confirmationText, "neha");
-      onSuccess("✅ Slot booked successfully! Check your email.");
+      onSuccess(" Slot booked successfully! Check your email.");
       onClose();
     } catch (err) {
       const detail = err?.response?.data?.detail;
@@ -145,7 +145,7 @@ function BookingModal({ slot, onClose, onSuccess }) {
 
           {selectedSubSlot && (
             <div style={{ marginTop: "0.5rem", padding: "0.5rem 0.75rem", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "6px", fontSize: "0.82rem", color: "#166534" }}>
-              ✅ Selected: <strong>{selectedSubSlot.day}</strong> at <strong>{selectedSubSlot.time}</strong>
+               Selected: <strong>{selectedSubSlot.day}</strong> at <strong>{selectedSubSlot.time}</strong>
             </div>
           )}
         </div>
@@ -228,9 +228,9 @@ export default function InterviewSlots() {
     try {
       await client.delete(`/api/v1/interview-slots/${slotId}`);
       setSlots(prev => prev.filter(s => s.id !== slotId));
-      showMsg("✅ Slot deleted successfully.");
+      showMsg(" Slot deleted successfully.");
     } catch (err) {
-      showMsg("❌ " + (err.response?.data?.detail || "Deletion failed."));
+      showMsg(" " + (err.response?.data?.detail || "Deletion failed."));
     }
   };
 
@@ -268,9 +268,9 @@ export default function InterviewSlots() {
       const res = await client.put(`/api/v1/interview-slots/${slotId}`, payload);
       setSlots(prev => prev.map(s => s.id === slotId ? res.data : s));
       setEditingId(null);
-      showMsg("✅ Slot updated successfully.");
+      showMsg(" Slot updated successfully.");
     } catch (err) {
-      showMsg("❌ " + (err.response?.data?.detail || "Update failed."));
+      showMsg(" " + (err.response?.data?.detail || "Update failed."));
     } finally {
       setEditLoading(false);
     }
@@ -391,11 +391,11 @@ export default function InterviewSlots() {
                           </span>
                           {seatsLeft <= 0 ? (
                             <span style={{ background: "#FEE2E2", color: "#991B1B", padding: "0.2rem 0.6rem", borderRadius: "999px", fontSize: "0.8rem", fontWeight: 600 }}>
-                              🔴 Fully Booked
+                               Fully Booked
                             </span>
                           ) : (
                             <span style={{ background: "#D1FAE5", color: "#065F46", padding: "0.2rem 0.6rem", borderRadius: "999px", fontSize: "0.8rem", fontWeight: 600 }}>
-                              🟢 {seatsLeft} seat{seatsLeft !== 1 ? "s" : ""} left
+                               {seatsLeft} seat{seatsLeft !== 1 ? "s" : ""} left
                             </span>
                           )}
                         </div>
@@ -426,10 +426,10 @@ export default function InterviewSlots() {
                       {dbUser?.role === "admin" && (
                         <div style={styles.adminActions}>
                           <button onClick={() => handleEditOpen(slot)} style={styles.editBtn}>
-                            ✏️ Edit Slot
+                             Edit Slot
                           </button>
                           <button onClick={() => handleDelete(slot.id)} style={styles.deleteBtn}>
-                            🗑 Delete Slot
+                             Delete Slot
                           </button>
                         </div>
                       )}

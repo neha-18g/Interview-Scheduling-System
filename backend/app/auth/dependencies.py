@@ -16,22 +16,15 @@ def get_current_user(
     decoded = verify_firebase_token(token)
     firebase_uid = decoded.get("uid")
     email        = decoded.get("email", "")
+    firebase_name = decoded.get("name") or email.split("@")[0]
 
     user = db.query(User).filter(User.firebase_uid == firebase_uid).first() # checks whether the user already exists 
-
-    if not user:
-        user = db.query(User).filter(User.firebase_uid == firebase_uid).first()
-        if user:
-            user.firebase_uid = firebase_uid
-            user.is_active = 1
-            db.commit()
-            db.refresh(user)
 
     if not user:
         user = User(
             firebase_uid=firebase_uid,
             email=email,
-            name=email.split("@")[0],
+            name=firebase_name,
             role=UserRole.candidate,
             is_active=1,
         )

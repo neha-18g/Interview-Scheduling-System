@@ -10,7 +10,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { firebaseUser, loading, refereshDbUser } = useAuth();
+  const { firebaseUser, loading, refreshDbUser } = useAuth();
 
   const [isSignup,   setIsSignup]   = useState(false);
   const [name,       setName]       = useState("");
@@ -26,6 +26,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("isSignup value at submit:", isSignup);  
     setError("");
     setSubmitting(true);
 
@@ -49,7 +50,7 @@ export default function Login() {
 
       if(!res.ok) throw new Error(data.detail || "Registration failed");      
 
-      await refereshDbUser();
+      await refreshDbUser();
       navigate("/dashboard");
         } else {
           await signInWithEmailAndPassword(auth, email, password);

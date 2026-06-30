@@ -284,7 +284,7 @@ function CandidateModal({ booking, onClose, onStatusUpdate }) {
                 fontWeight: 700,
                 color: booking.ai_result === "Potential Match" ? "#16a34a" : "#dc2626",
               }}>
-                {booking.ai_result === "Potential Match" ? "✅ Potential Match" : "❌ Not a Match"}
+                {booking.ai_result === "Potential Match" ? " Potential Match" : " Not a Match"}
               </span>
               <p style={{ margin: "0.25rem 0 0.75rem", fontSize: "0.85rem", color: "#374151" }}>
                 {booking.ai_reason}

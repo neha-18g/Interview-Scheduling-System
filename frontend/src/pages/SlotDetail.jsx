@@ -39,10 +39,10 @@ export default function SlotDetail() {
     try {
       const res = await client.put(`/api/v1/bookings/${bookingId}/status`, { status });
       setBookings(prev => prev.map(b => b.id === bookingId ? res.data : b));
-      setMsg(`✅ Booking ${status}.`);
+      setMsg(` Booking ${status}.`);
       setTimeout(() => setMsg(""), 3000);
     } catch (err) {
-      setMsg("❌ " + (err.response?.data?.detail || "Update failed."));
+      setMsg(" " + (err.response?.data?.detail || "Update failed."));
       setTimeout(() => setMsg(""), 3000);
     }
   };
@@ -52,10 +52,10 @@ export default function SlotDetail() {
     try {
       await client.delete(`/api/v1/bookings/${bookingId}`);
       setBookings(prev => prev.filter(b => b.id !== bookingId));
-      setMsg(`✅ Candidate removed.`);
+      setMsg(` Candidate removed.`);
       setTimeout(() => setMsg(""), 3000);
     } catch (err) {
-      setMsg("❌ " + (err.response?.data?.detail || "Remove failed."));
+      setMsg(" " + (err.response?.data?.detail || "Remove failed."));
       setTimeout(() => setMsg(""), 3000);
     }
   };
@@ -178,13 +178,13 @@ export default function SlotDetail() {
                         onClick={() => updateStatus(b.id, "approved")}
                         style={styles.approveBtn}
                       >
-                        ✅ Approve
+                         Approve
                       </button>
                       <button
                         onClick={() => updateStatus(b.id, "rejected")}
                         style={styles.rejectBtn}
                       >
-                        ❌ Reject
+                         Reject
                       </button>
                     </div>
                   )}
@@ -194,7 +194,7 @@ export default function SlotDetail() {
                     onClick={() => removeCandidate(b.id, b.candidate?.name)}
                     style={styles.removeBtn}
                   >
-                    🗑 Remove
+                     Remove
                   </button>
                 </div>
               </div>

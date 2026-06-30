@@ -42,7 +42,7 @@ console.log("dbUser:", dbUser);
           <div>
             <div style={styles.eyebrow}>Dashboard</div>
             <h1 style={styles.title}>
-              Welcome back, {dbUser?.name?.split(" ")[0] ?? "there"} 👋
+              Welcome back, {dbUser?.name?.split(" ")[0] ?? "there"} 
             </h1>
             <span style={{
               ...styles.badge,
