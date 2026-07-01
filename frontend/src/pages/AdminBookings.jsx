@@ -161,7 +161,7 @@ function CandidateModal({ booking, onClose, onStatusUpdate }) {
             {booking.resume_path ? (
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 <a
-                  href={`http://localhost:8000/${booking.resume_path}`}
+                  href={`/${booking.resume_path}`}
                   target="_blank"
                   rel="noreferrer"
                   style={{
@@ -531,24 +531,24 @@ function fmtDate(isoStr) {
 }
 
 const styles = {
-  page:         { minHeight: "100vh", background: "#f9fafb", fontFamily: "system-ui, sans-serif" },
+  page:         { minHeight: "100vh", background: "#f4f6fb", fontFamily: "'Inter', system-ui, sans-serif" },
   container:    { maxWidth: "900px", margin: "0 auto", padding: "2rem 1rem" },
   header:       { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.5rem" },
-  title:        { margin: "0 0 0.25rem", fontSize: "1.6rem", fontWeight: 700 },
-  sub:          { margin: 0, color: "#666", fontSize: "0.9rem" },
-  backBtn:      { padding: "0.5rem 1rem", background: "transparent", border: "1px solid #d1d5db", borderRadius: "8px", cursor: "pointer" },
+  title:        { margin: "0 0 0.25rem", fontSize: "1.6rem", fontWeight: 700, fontFamily: "'Hanken Grotesk', sans-serif", color: "#121c2a" },
+  sub:          { margin: 0, color: "#4b5563", fontSize: "0.9rem" },
+  backBtn:      { padding: "0.5rem 1rem", background: "transparent", border: "1px solid #d1d5db", borderRadius: "8px", cursor: "pointer", color: "#4b5563" },
   error:        { padding: "0.75rem 1rem", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: "8px", marginBottom: "1rem", color: "#dc2626" },
-  empty:        { textAlign: "center", color: "#666", marginTop: "3rem" },
+  empty:        { textAlign: "center", color: "#4b5563", marginTop: "3rem" },
   tabs:         { display: "flex", gap: 4, marginBottom: "1.25rem" },
-  tab:          { background: "none", border: "none", padding: "8px 14px", cursor: "pointer", color: "#6b7280", fontWeight: 500, fontSize: 14, display: "flex", alignItems: "center", gap: 6, borderBottom: "2px solid transparent", marginBottom: -2 },
+  tab:          { background: "none", border: "none", padding: "8px 14px", cursor: "pointer", color: "#4b5563", fontWeight: 500, fontSize: 14, display: "flex", alignItems: "center", gap: 6, borderBottom: "2px solid transparent", marginBottom: -2 },
   tabActive:    { color: "#2563eb", borderBottomColor: "#2563eb" },
   tabCount:     { padding: "1px 7px", borderRadius: 999, fontSize: 11, fontWeight: 700 },
-  card:         { background: "#fff", border: "1px solid #e5e7eb", borderRadius: "12px", padding: "1.25rem" },
+  card:         { background: "#f9f9ff", border: "1px solid #d1d5db", borderRadius: "12px", padding: "1.25rem" },
   cardTop:      { display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" },
   viewBtn:      { padding: "0.4rem 0.9rem", background: "#eff6ff", color: "#2563eb", border: "none", borderRadius: 6, cursor: "pointer", fontWeight: 600, fontSize: 13 },
   delBtn:       { padding: "0.4rem 0.9rem", background: "#fef2f2", color: "#dc2626", border: "none", borderRadius: 6, cursor: "pointer", fontWeight: 600, fontSize: 13 },
-  closeBtn:     { background: "#f3f4f6", border: "none", color: "#6b7280", width: 32, height: 32, borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center" },
-  infoBox:      { display: "flex", alignItems: "center", gap: 14, background: "#f9fafb", padding: "16px 18px", borderRadius: 10, margin: "20px 0 16px" },
+  closeBtn:     { background: "#e6eeff", border: "none", color: "#004ac6", width: 32, height: 32, borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center" },
+  infoBox:      { display: "flex", alignItems: "center", gap: 14, background: "#f4f6fb", padding: "16px 18px", borderRadius: 10, margin: "20px 0 16px" },
   avatar:       { width: 44, height: 44, borderRadius: "50%", background: "#2563eb", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 18, flexShrink: 0 },
   sectionTitle: { fontSize: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5, color: "#9CA3AF", margin: "0 0 10px" },
   btnAction:    { color: "#fff", border: "none", padding: "11px 0", borderRadius: 8, cursor: "pointer", fontWeight: 600, fontSize: 14 },

@@ -105,17 +105,17 @@ onClick={async () => {
 }
 
 const styles = {
-  page:      { minHeight: "100vh", background: "#f9fafb", fontFamily: "system-ui, sans-serif" },
+  page:      { minHeight: "100vh", background: "#f4f6fb", fontFamily: "'Inter', system-ui, sans-serif" },
   container: { maxWidth: "600px", margin: "0 auto", padding: "2rem 1rem" },
   header:    { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" },
-  title:     { margin: 0, fontSize: "1.5rem", fontWeight: 700 },
-  backBtn:   { padding: "0.5rem 1rem", background: "transparent", border: "1px solid #d1d5db", borderRadius: "8px", cursor: "pointer" },
-  card:      { background: "#fff", border: "1px solid #e5e7eb", borderRadius: "12px", padding: "1.5rem", marginBottom: "1.5rem" },
-  row:       { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.75rem 0", borderBottom: "1px solid #f3f4f6" },
-  label:     { fontWeight: 600, color: "#6b7280", fontSize: "0.9rem" },
-  value:     { color: "#111827", fontSize: "0.9rem" },
+  title:     { margin: 0, fontSize: "1.5rem", fontWeight: 700, fontFamily: "'Hanken Grotesk', sans-serif", color: "#121c2a" },
+  backBtn:   { padding: "0.5rem 1rem", background: "transparent", border: "1px solid #d1d5db", borderRadius: "8px", cursor: "pointer", color: "#4b5563" },
+  card:      { background: "#f9f9ff", border: "1px solid #d1d5db", borderRadius: "12px", padding: "1.5rem", marginBottom: "1.5rem" },
+  row:       { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.75rem 0", borderBottom: "1px solid #e5e7eb" },
+  label:     { fontWeight: 600, color: "#9CA3AF", fontSize: "0.9rem" },
+  value:     { color: "#121c2a", fontSize: "0.9rem" },
   badge:     { padding: "0.2rem 0.6rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 600 },
   deleteBtn: { width: "100%", padding: "0.75rem", background: "#dc2626", color: "#fff", border: "none", borderRadius: "8px", cursor: "pointer", fontWeight: 600 },
-  center:    { textAlign: "center", marginTop: "3rem", color: "#666" },
+  center:    { textAlign: "center", marginTop: "3rem", color: "#4b5563" },
   error:     { textAlign: "center", marginTop: "3rem", color: "#dc2626" },
 };

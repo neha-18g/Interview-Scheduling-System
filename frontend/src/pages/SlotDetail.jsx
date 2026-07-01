@@ -155,7 +155,7 @@ export default function SlotDetail() {
                   </span>
                  {b.resume_path ? (
   <a
-      href={`http://localhost:8000/${b.resume_path}`}
+      href={`/${b.resume_path}`}
       target="_blank"
       rel="noreferrer"
 
@@ -227,24 +227,24 @@ function fmtDate(isoStr) {
 }
 
 const styles = {
-  page:          { minHeight: "100vh", background: "#f9fafb", fontFamily: "system-ui, sans-serif" },
+  page:          { minHeight: "100vh", background: "#f4f6fb", fontFamily: "'Inter', system-ui, sans-serif" },
   container:     { maxWidth: "780px", margin: "0 auto", padding: "2rem 1rem" },
   header:        { display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" },
-  backBtn:       { padding: "0.4rem 0.9rem", background: "transparent", border: "1px solid #d1d5db", borderRadius: "8px", cursor: "pointer", whiteSpace: "nowrap" },
-  title:         { margin: 0, fontSize: "1.5rem", fontWeight: 700 },
-  infoCard:      { background: "#fff", border: "1px solid #e5e7eb", borderRadius: "12px", padding: "1.25rem", marginBottom: "1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem" },
-  infoRow:       { display: "flex", justifyContent: "space-between", fontSize: "0.9rem", color: "#374151" },
-  infoLabel:     { fontWeight: 600, color: "#6b7280" },
+  backBtn:       { padding: "0.4rem 0.9rem", background: "transparent", border: "1px solid #d1d5db", borderRadius: "8px", cursor: "pointer", whiteSpace: "nowrap", color: "#4b5563" },
+  title:         { margin: 0, fontSize: "1.5rem", fontWeight: 700, fontFamily: "'Hanken Grotesk', sans-serif", color: "#121c2a" },
+  infoCard:      { background: "#f9f9ff", border: "1px solid #d1d5db", borderRadius: "12px", padding: "1.25rem", marginBottom: "1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem" },
+  infoRow:       { display: "flex", justifyContent: "space-between", fontSize: "0.9rem", color: "#121c2a" },
+  infoLabel:     { fontWeight: 600, color: "#9CA3AF" },
   toast:         { padding: "0.75rem", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "8px", marginBottom: "1rem", color: "#166534" },
-  sectionTitle:  { fontSize: "1.1rem", fontWeight: 700, marginBottom: "1rem", color: "#111827" },
-  emptyBox:      { textAlign: "center", padding: "3rem", color: "#666" },
+  sectionTitle:  { fontSize: "1.1rem", fontWeight: 700, marginBottom: "1rem", color: "#121c2a" },
+  emptyBox:      { textAlign: "center", padding: "3rem", color: "#4b5563" },
   list:          { display: "flex", flexDirection: "column", gap: "1rem" },
-  card:          { background: "#fff", border: "1px solid #e5e7eb", borderRadius: "12px", padding: "1.25rem", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem" },
+  card:          { background: "#f9f9ff", border: "1px solid #d1d5db", borderRadius: "12px", padding: "1.25rem", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem" },
   cardLeft:      { display: "flex", gap: "1rem", alignItems: "flex-start" },
-  avatar:        { width: "40px", height: "40px", borderRadius: "50%", background: "#dbeafe", color: "#1e40af", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "1rem", flexShrink: 0 },
-  candidateName: { margin: "0 0 0.2rem", fontWeight: 600, fontSize: "0.95rem" },
-  candidateEmail:{ margin: "0 0 0.2rem", fontSize: "0.85rem", color: "#6b7280" },
-  bookedAt:      { margin: 0, fontSize: "0.8rem", color: "#9ca3af" },
+  avatar:        { width: "40px", height: "40px", borderRadius: "50%", background: "#e6eeff", color: "#004ac6", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "1rem", flexShrink: 0 },
+  candidateName: { margin: "0 0 0.2rem", fontWeight: 600, fontSize: "0.95rem", color: "#121c2a" },
+  candidateEmail:{ margin: "0 0 0.2rem", fontSize: "0.85rem", color: "#9CA3AF" },
+  bookedAt:      { margin: 0, fontSize: "0.8rem", color: "#9CA3AF" },
   cardRight:     { display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.5rem", flexShrink: 0 },
   badge:         { padding: "0.2rem 0.75rem", borderRadius: "999px", fontSize: "0.8rem", fontWeight: 600, textTransform: "capitalize" },
   actionBtns:    { display: "flex", gap: "0.5rem" },

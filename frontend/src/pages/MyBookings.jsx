@@ -187,7 +187,7 @@ export default function MyBookings() {
                     </button>
                     {b.resume_path && (
                       <a
-                        href={`http://localhost:8000/${b.resume_path}`}
+                        href={`/${b.resume_path}`}
                         target="_blank"
                         rel="noreferrer"
                         style={styles.viewResumeBtn}
@@ -251,35 +251,35 @@ function fmtDate(isoStr) {
 }
 
 const styles = {
-  page:           { minHeight: "100vh", background: "#f9fafb", fontFamily: "system-ui, sans-serif" },
+  page:           { minHeight: "100vh", background: "#f4f6fb", fontFamily: "'Inter', system-ui, sans-serif" },
   container:      { maxWidth: "800px", margin: "0 auto", padding: "2rem 1rem" },
   header:         { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.5rem" },
-  title:          { margin: "0 0 0.25rem", fontSize: "1.6rem", fontWeight: 700 },
-  sub:            { margin: 0, color: "#666", fontSize: "0.9rem" },
+  title:          { margin: "0 0 0.25rem", fontSize: "1.6rem", fontWeight: 700, fontFamily: "'Hanken Grotesk', sans-serif", color: "#121c2a" },
+  sub:            { margin: 0, color: "#4b5563", fontSize: "0.9rem" },
   createBtn:      { padding: "0.5rem 1rem", background: "#2563eb", color: "#fff", border: "none", borderRadius: "8px", cursor: "pointer", fontWeight: 600 },
-  backBtn:        { padding: "0.5rem 1rem", background: "transparent", border: "1px solid #d1d5db", borderRadius: "8px", cursor: "pointer" },
+  backBtn:        { padding: "0.5rem 1rem", background: "transparent", border: "1px solid #d1d5db", borderRadius: "8px", cursor: "pointer", color: "#4b5563" },
   error:          { padding: "0.75rem 1rem", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: "8px", marginBottom: "1rem", color: "#dc2626" },
-  empty:          { textAlign: "center", color: "#666", marginTop: "3rem" },
-  emptyBox:       { textAlign: "center", padding: "60px 0", background: "#fff", borderRadius: 12, border: "1px solid #e5e7eb" },
+  empty:          { textAlign: "center", color: "#4b5563", marginTop: "3rem" },
+  emptyBox:       { textAlign: "center", padding: "60px 0", background: "#f9f9ff", borderRadius: 12, border: "1px solid #d1d5db" },
   grid:           { display: "flex", flexDirection: "column", gap: "1rem" },
-  card:           { background: "#fff", border: "1px solid #e5e7eb", borderRadius: "12px", overflow: "hidden" },
+  card:           { background: "#f9f9ff", border: "1px solid #d1d5db", borderRadius: "12px", overflow: "hidden" },
   cardBody:       { padding: "1.25rem" },
   cardRow:        { display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8, marginBottom: "0.5rem" },
-  cardTitle:      { margin: 0, fontSize: "1.1rem", fontWeight: 700 },
-  cardTime:       { display: "flex", flexDirection: "column", gap: "0.25rem", fontSize: "0.85rem", color: "#666", margin: "0.75rem 0" },
-  cardFooter:     { display: "flex", justifyContent: "space-between", paddingTop: "0.75rem", borderTop: "1px solid #f3f4f6" },
+  cardTitle:      { margin: 0, fontSize: "1.1rem", fontWeight: 700, color: "#121c2a" },
+  cardTime:       { display: "flex", flexDirection: "column", gap: "0.25rem", fontSize: "0.85rem", color: "#4b5563", margin: "0.75rem 0" },
+  cardFooter:     { display: "flex", justifyContent: "space-between", paddingTop: "0.75rem", borderTop: "1px solid #e5e7eb" },
   resumeBox:      { display: "flex", justifyContent: "space-between", alignItems: "center", margin: "0.75rem 0" },
   resumeAttached: { fontSize: "0.85rem", color: "#16a34a" },
   resumeMissing:  { fontSize: "0.85rem", color: "#9CA3AF" },
   resumeBtn:      { padding: "0.4rem 0.85rem", background: "#2563eb", color: "#fff", border: "none", borderRadius: "6px", cursor: "pointer", fontSize: "0.85rem" },
-  statementBox:   { background: "#f9fafb", border: "1px solid #e5e7eb", borderRadius: "8px", padding: "0.75rem", margin: "0.5rem 0" },
-  statementLabel: { margin: "0 0 0.25rem", fontSize: "0.75rem", fontWeight: 700, color: "#6b7280", textTransform: "uppercase" },
-  statementText:  { margin: 0, fontSize: "0.9rem", color: "#374151" },
+  statementBox:   { background: "#f4f6fb", border: "1px solid #d1d5db", borderRadius: "8px", padding: "0.75rem", margin: "0.5rem 0" },
+  statementLabel: { margin: "0 0 0.25rem", fontSize: "0.75rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase" },
+  statementText:  { margin: 0, fontSize: "0.9rem", color: "#121c2a" },
   uploadBtn:      { padding: "0.5rem 1.25rem", background: "#2563eb", color: "#fff", border: "none", borderRadius: "8px", cursor: "pointer", fontWeight: 600 },
-  cancelBtn:      { padding: "0.5rem 1rem", background: "transparent", border: "1px solid #d1d5db", borderRadius: "8px", cursor: "pointer" },
-  viewResumeBtn:  { padding: "0.4rem 0.85rem", background: "#f0fdf4", color: "#16a34a", border: "1px solid #bbf7d0", borderRadius: "6px", cursor: "pointer", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none", display: "inline-block" },
+  cancelBtn:      { padding: "0.5rem 1rem", background: "transparent", border: "1px solid #d1d5db", borderRadius: "8px", cursor: "pointer", color: "#4b5563" },
+  viewResumeBtn:  { padding: "0.4rem 0.85rem", background: "#eff6ff", color: "#2563eb", border: "1px solid #bfdbfe", borderRadius: "6px", cursor: "pointer", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none", display: "inline-block" },
 };
 
-const overlay  = { position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50 };
-const modal    = { background: "#fff", borderRadius: 12, padding: "1.5rem", width: "100%", maxWidth: 420, boxShadow: "0 20px 60px rgba(0,0,0,0.2)" };
+const overlay  = { position: "fixed", inset: 0, background: "rgba(18,28,42,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50 };
+const modal    = { background: "#f9f9ff", borderRadius: 12, padding: "1.5rem", width: "100%", maxWidth: 420, boxShadow: "0 20px 60px rgba(0,0,0,0.2)" };
 const errorBox = { background: "#fef2f2", border: "1px solid #fecaca", borderRadius: 6, padding: "0.5rem 0.75rem", color: "#dc2626", fontSize: "0.85rem" };

@@ -88,17 +88,17 @@ export default function CreateSlot() {
 }
 
 const styles = {
-  page:      { minHeight: "100vh", background: "#f9fafb", fontFamily: "system-ui, sans-serif", display: "flex", alignItems: "center", justifyContent: "center" },
-  card:      { background: "#fff", borderRadius: "12px", boxShadow: "0 2px 16px rgba(0,0,0,0.08)", padding: "2rem", width: "100%", maxWidth: "560px" },
+  page:      { minHeight: "100vh", background: "#f4f6fb", fontFamily: "'Inter', system-ui, sans-serif", display: "flex", alignItems: "center", justifyContent: "center" },
+  card:      { background: "#f9f9ff", border: "1px solid #d1d5db", borderRadius: "12px", boxShadow: "0 8px 30px rgba(18,28,42,0.08)", padding: "2rem", width: "100%", maxWidth: "560px" },
   header:    { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" },
-  title:     { margin: 0, fontSize: "1.4rem", fontWeight: 700 },
-  backBtn:   { padding: "0.4rem 0.9rem", background: "transparent", border: "1px solid #d1d5db", borderRadius: "8px", cursor: "pointer" },
+  title:     { margin: 0, fontSize: "1.4rem", fontWeight: 700, fontFamily: "'Hanken Grotesk', sans-serif", color: "#121c2a" },
+  backBtn:   { padding: "0.4rem 0.9rem", background: "transparent", border: "1px solid #d1d5db", borderRadius: "8px", cursor: "pointer", color: "#4b5563" },
   error:     { background: "#fef2f2", border: "1px solid #fecaca", color: "#dc2626", borderRadius: "8px", padding: "0.75rem", marginBottom: "1rem", fontSize: "0.9rem" },
   form:      { display: "flex", flexDirection: "column", gap: "1rem" },
   field:     { display: "flex", flexDirection: "column", gap: "0.35rem", flex: 1 },
   row:       { display: "flex", gap: "1rem" },
-  label:     { fontSize: "0.875rem", fontWeight: 500, color: "#374151" },
-  input:     { padding: "0.6rem 0.875rem", border: "1px solid #d1d5db", borderRadius: "8px", fontSize: "1rem" },
-  textarea:  { padding: "0.6rem 0.875rem", border: "1px solid #d1d5db", borderRadius: "8px", fontSize: "1rem", resize: "vertical" },
+  label:     { fontSize: "0.875rem", fontWeight: 500, color: "#4b5563" },
+  input:     { padding: "0.6rem 0.875rem", border: "1px solid #d1d5db", borderRadius: "8px", fontSize: "1rem", background: "#fff", color: "#121c2a" },
+  textarea:  { padding: "0.6rem 0.875rem", border: "1px solid #d1d5db", borderRadius: "8px", fontSize: "1rem", resize: "vertical", background: "#fff", color: "#121c2a" },
   submitBtn: { padding: "0.75rem", background: "#2563eb", color: "#fff", border: "none", borderRadius: "8px", fontSize: "1rem", fontWeight: 600, cursor: "pointer" },
 };

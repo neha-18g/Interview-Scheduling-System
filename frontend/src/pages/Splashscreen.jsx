@@ -19,7 +19,7 @@ export default function SplashScreen() {
         flexDirection: "column",        // stack children vertically
         justifyContent: "center",
         alignItems: "center",
-        background: "linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #3b82f6 100%)",
+        background: "linear-gradient(135deg, #121c2a 0%, #1e3a8a 50%, #2563eb 100%)",
         color: "#fff",
         overflow: "hidden",
       }}
@@ -44,6 +44,7 @@ export default function SplashScreen() {
 
       <h1
         style={{
+          fontFamily: "'Hanken Grotesk', sans-serif",
           fontSize: "3.5rem",
           fontWeight: "800",
           marginBottom: "12px",

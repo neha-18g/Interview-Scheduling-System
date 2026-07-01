@@ -15,18 +15,24 @@ from app.db.base import engine, Base
 from app.db import models
 from app.users.router import router as users_router
 from app.bookings.tts import router as tts_router
+from app.auth.firebase import init_firebase # connects firebase
 
 logging.getLogger("sqlalchemy.engine").setLevel(logging.WARNING)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    Base.metadata.create_all(bind=engine)#create database table 
-    print("Database tables ready")
-    from app.auth.firebase import init_firebase # connects firebase
-    init_firebase()
+    try:
+        Base.metadata.create_all(bind=engine)#create database table 
+        print("Database tables ready")
+        init_firebase()
+        print("Firebase initialized")
+    except Exception as e:
+        print(f"startup error: {e}")
+        raise
+
     yield
-    worker.terminate()
-    print("Worker stopped")
+
+    print("Application shutting down..")
 
 app = FastAPI(
     title="Interview Scheduling API",#to show in swagger ui 
@@ -51,6 +57,10 @@ app.include_router(bookings_router)
 app.include_router(email_logs_router)
 app.include_router(resume_review_router)
 app.include_router(tts_router)
+
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the Interview Scheduling API!"}
 
 @app.get("/health")
 async def health_check():

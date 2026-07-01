@@ -134,7 +134,7 @@ def get_resume_url(
     # e.g. "uploads/resumes/abc.pdf" → "/uploads/resumes/abc.pdf"
     url_path = "/" + booking.resume_path.replace("\\", "/")
     
-    return {"url": f"http://localhost:8000{url_path}"}
+    return {"url": {url_path}}
 
 # ADDED — new route
 @router.get("/interview-slots/{slot_id}/sub-slots")

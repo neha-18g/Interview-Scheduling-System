@@ -21,16 +21,25 @@ def get_current_user(
     user = db.query(User).filter(User.firebase_uid == firebase_uid).first() # checks whether the user already exists 
 
     if not user:
-        user = User(
-            firebase_uid=firebase_uid,
-            email=email,
-            name=firebase_name,
-            role=UserRole.candidate,
-            is_active=1,
-        )
-        db.add(user)
-        db.commit()
-        db.refresh(user)
+
+        existing_by_email = db.query(User).filter(User.email == email).first()
+
+        if existing_by_email:
+            existing_by_email.firebase_uid = firebase_uid
+            db.commit()
+            db.refresh(existing_by_email)
+            user = existing_by_email
+        else:
+            user = User(
+                firebase_uid=firebase_uid,
+                email=email,
+                name=firebase_name,
+                role=UserRole.candidate,
+                is_active=1,
+            )
+            db.add(user)
+            db.commit()
+            db.refresh(user)
 
     if not user.is_active:
         raise HTTPException(

@@ -98,16 +98,18 @@ export default function EmailLogs() {
 }
 
 const styles = {
-  page:      { minHeight: "100vh", fontFamily: "system-ui, sans-serif", display: "flex", flexDirection: "column"  },
+  page:      { minHeight: "100vh", background: "#f4f6fb", fontFamily: "'Inter', system-ui, sans-serif", display: "flex", flexDirection: "column" },
   container: { maxWidth: "960px", margin: "0 auto", padding: "2rem 1rem", flex: 1 },
   header:    { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.5rem" },
-  title:     { margin: "0 0 0.25rem", fontSize: "1.6rem", fontWeight: 700 },
-  sub:       { margin: 0, color: "#666", fontSize: "0.9rem" },
-  backBtn:   { padding: "0.5rem 1rem", background: "transparent", border: "1px solid #d1d5db", borderRadius: "8px", cursor: "pointer" },
+  title:     { margin: "0 0 0.25rem", fontSize: "1.6rem", fontWeight: 700, fontFamily: "'Hanken Grotesk', sans-serif", color: "#121c2a" },
+  sub:       { margin: 0, color: "#4b5563", fontSize: "0.9rem" },
+  backBtn:   { padding: "0.5rem 1rem", background: "transparent", border: "1px solid #d1d5db", borderRadius: "8px", cursor: "pointer", color: "#4b5563" },
   error:     { background: "#fef2f2", border: "1px solid #fecaca", color: "#dc2626", borderRadius: "8px", padding: "0.75rem", marginBottom: "1rem" },
-  empty:     { textAlign: "center", color: "#666", marginTop: "3rem" },
-  table:     { width: "100%", borderCollapse: "collapse", background: "#fff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.06)" },
-  th:        { padding: "0.75rem 1rem", textAlign: "left", fontSize: "0.8rem", fontWeight: 600, color: "#6b7280", background: "#f3f4f6", borderBottom: "1px solid #e5e7eb" },
-  td:        { padding: "0.75rem 1rem", fontSize: "0.875rem", color: "#374151", borderBottom: "1px solid #f3f4f6" },
+  empty:     { textAlign: "center", color: "#4b5563", marginTop: "3rem" },
+  table:     { width: "100%", borderCollapse: "collapse", background: "#f9f9ff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.06)" },
+  th:        { padding: "0.75rem 1rem", textAlign: "left", fontSize: "0.8rem", fontWeight: 600, color: "#4b5563", background: "#e6eeff", borderBottom: "1px solid #d1d5db" },
+  td:        { padding: "0.75rem 1rem", fontSize: "0.875rem", color: "#121c2a", borderBottom: "1px solid #e5e7eb" },
   badge:     { padding: "0.2rem 0.6rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 600 },
+  viewBtn:   { padding: "0.4rem 0.85rem", background: "#eff6ff", color: "#2563eb", border: "1px solid #bfdbfe", borderRadius: "6px", cursor: "pointer", fontSize: "0.82rem", fontWeight: 600 },
+  deleteBtn: { padding: "0.4rem 0.85rem", background: "#fef2f2", color: "#dc2626", border: "1px solid #fecaca", borderRadius: "6px", cursor: "pointer", fontSize: "0.82rem", fontWeight: 600 },
 };
