@@ -13,14 +13,13 @@ CREATE TABLE IF NOT EXISTS interview_slots (
     id             INT AUTO_INCREMENT PRIMARY KEY,
     title          VARCHAR(255) NOT NULL,
     description    TEXT,
-    start_time     TIMESTAMP NOT NULL,
-    end_time       TIMESTAMP NOT NULL,
+    start_time     DATETIME NOT NULL,
+    end_time       DATETIME NOT NULL,
     max_candidates INT NOT NULL DEFAULT 1,
     interview_duration INT NOT NULL DEFAULT 30,
     created_by     INT NOT NULL,
-    created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-                   ON UPDATE CURRENT_TIMESTAMP,
+    created_at     DATETIME NOT NULL,
+    updated_at     DATETIME NOT NULL,
     FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE CASCADE
 );
 
@@ -28,8 +27,8 @@ CREATE TABLE IF NOT EXISTS interview_slots (
 CREATE TABLE IF NOT EXISTS interview_sub_slots (
     id         INT AUTO_INCREMENT PRIMARY KEY,
     slot_id    INT NOT NULL,
-    start_time TIMESTAMP NOT NULL,
-    end_time   TIMESTAMP NOT NULL,
+    start_time DATETIME NOT NULL,
+    end_time   DATETIME NOT NULL,
     is_booked  TINYINT NOT NULL DEFAULT 0,
     FOREIGN KEY (slot_id) REFERENCES interview_slots(id) ON DELETE CASCADE
 );
@@ -42,9 +41,8 @@ CREATE TABLE IF NOT EXISTS slot_bookings (
     candidate_user_id INT NOT NULL,
     status            ENUM('pending', 'approved', 'rejected')
                       NOT NULL DEFAULT 'pending',
-    booked_at         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-                      ON UPDATE CURRENT_TIMESTAMP,
+    booked_at         DATETIME NOT NULL ,
+    updated_at        DATETIME NOT NULL ,
     candidate_statement     TEXT NOT NULL,
     resume_path             VARCHAR(512) DEFAULT NULL, 
     ai_summary              TEXT DEFAULT NULL,
@@ -62,6 +60,6 @@ CREATE TABLE IF NOT EXISTS email_logs (
     subject         VARCHAR(500) NOT NULL,
     status          ENUM('queued', 'sent', 'failed') NOT NULL DEFAULT 'queued',
     error_message   TEXT,
-    created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at      DATETIME NOT NULL,
     FOREIGN KEY (booking_id) REFERENCES slot_bookings(id) ON DELETE CASCADE
 );
